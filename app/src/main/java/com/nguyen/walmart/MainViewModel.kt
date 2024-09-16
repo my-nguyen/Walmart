@@ -17,7 +17,7 @@ class MainViewModel : ViewModel() {
 
     fun load() {
         viewModelScope.launch {
-            Log.d("Tram", "loading...")
+            Log.d("MyViewModel", "loading...")
             _countries.postValue(Repository.fetchCountries())
         }
     }

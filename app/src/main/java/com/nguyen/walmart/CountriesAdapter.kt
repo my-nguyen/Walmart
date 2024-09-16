@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyen.walmart.databinding.ItemCountryBinding
 
-class CountriesAdapter(val countries: List<Country>) : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemCountryBinding) : RecyclerView.ViewHolder(binding.root) {
+class CountriesAdapter(private val countries: List<Country>) : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
+    inner class ViewHolder(private val binding: ItemCountryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(country: Country) {
             binding.apply {
                 name.text = country.name ?: ""

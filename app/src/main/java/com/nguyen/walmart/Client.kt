@@ -1,13 +1,13 @@
 package com.nguyen.walmart
 
 class Client(private val service: CountryService) {
-    suspend fun fetchCountries() = safeApiCall { service.fetchCountries() }
+    suspend fun fetchCountries() = wrapper { service.fetchCountries() }
 
-    private inline fun<T> safeApiCall(apiCall: () -> T): MyResponse<T> {
+    private inline fun<T> wrapper(lambda: () -> T): Response<T> {
         return try {
-            MyResponse.success(apiCall.invoke())
+            Response.success(lambda.invoke())
         } catch (e: Exception) {
-            MyResponse.failure(e)
+            Response.failure(e)
         }
     }
 }
