@@ -15,5 +15,12 @@ object Network {
         retrofit.create(CountryService::class.java)
     }
 
-    val client = Client(service)
+    // val client = Client(service)
+    suspend fun fetchCountries(): Response<List<Country>> {
+        return try {
+            Response.success(service.fetchCountries())
+        } catch (e: Exception) {
+            Response.failure(e)
+        }
+    }
 }

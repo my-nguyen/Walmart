@@ -6,10 +6,10 @@ data class Response<T>(val status: Status, val data: T?, val exception: Exceptio
         data object Failure : Status()
     }
 
-    val failed: Boolean
+    val isFailure: Boolean
         get() = status == Status.Failure
-    val isSuccessful: Boolean
-        get() = !failed && data != null
+    val isSuccess: Boolean
+        get() = !isFailure && data != null
     val body: T
         get() = data!!
 

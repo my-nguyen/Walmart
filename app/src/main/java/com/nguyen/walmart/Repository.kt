@@ -4,8 +4,8 @@ import android.util.Log
 
 object Repository {
     suspend fun fetchCountries(): List<Country>? {
-        val request = Network.client.fetchCountries()
+        val request = Network.fetchCountries()
         Log.d("MyRepository", "request status: ${request.status}")
-        return if (request.failed || !request.isSuccessful) null else request.body
+        return if (request.isFailure || !request.isSuccess) null else request.body
     }
 }
