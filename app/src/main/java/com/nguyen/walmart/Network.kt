@@ -6,9 +6,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val BASE_URL = "https://gist.githubusercontent.com/peymano-wmt/"
 
 object Network {
-    fun countryService(): CountryService = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(CountryService::class.java)
+
+    private val service: CountryService by lazy {
+        retrofit.create(CountryService::class.java)
+    }
+
+    val client = Client(service)
 }

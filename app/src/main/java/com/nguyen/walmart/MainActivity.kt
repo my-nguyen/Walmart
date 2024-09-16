@@ -1,10 +1,12 @@
 package com.nguyen.walmart
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,9 +36,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         val viewModel: MainViewModel by viewModels()
-        viewModel.countries.observe(this, Observer {
+        viewModel.countries.observe(this) {
+            if (it == null) {
+                binding.tverror.isVisible = true
+                binding.retry.isVisible = true
+                return@observe
+            }
+
+            binding.tverror.isVisible = false
+            binding.retry.isVisible = false
             countries.addAll(it)
             countriesAdapter.notifyDataSetChanged()
-        })
+        }
+
+        binding.retry.setOnClickListener {
+            viewModel.load()
+        }
     }
 }

@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -13,9 +12,13 @@ class MainViewModel : ViewModel() {
     val countries : LiveData<List<Country>> = _countries
 
     init {
-        Log.d("MainViewModel", "init...")
-        CoroutineScope(Dispatchers.Main).launch {
-            _countries.value = Network.countryService().fetchCountries()
+        load()
+    }
+
+    fun load() {
+        viewModelScope.launch {
+            Log.d("Tram", "loading...")
+            _countries.postValue(Repository.fetchCountries())
         }
     }
 }
